@@ -8,12 +8,14 @@ import Connection.Jdbc;
 public class Hasta implements User {
 
   protected String isim = null;
-  protected Integer tc = null;
+  protected String tc = null;
+  protected String sifre = null;
   protected Jdbc db;
 
-  public Hasta(String isim, int tc, Jdbc db) {
+  public Hasta(String isim, String tc, String sifre, Jdbc db) {
     this.isim = isim;
     this.tc = tc;
+    this.sifre = sifre;
     this.db = db;
   }
 
