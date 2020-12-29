@@ -10,12 +10,13 @@ import java.awt.event.*;
 
 public class Login extends JFrame implements ActionListener {
 
+  public boolean isSucsesful = false;
   private String sifre;
   private String adSoyad;
   private String tcKimlikNo;
   private Jdbc db = null;
 
-  private javax.swing.JTextField isim_alani;
+  private javax.swing.JPasswordField sifre_alani;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JPanel jPanel1;
@@ -31,12 +32,11 @@ public class Login extends JFrame implements ActionListener {
   }
 
   private void initComponents() {
-
     jPanel1 = new javax.swing.JPanel();
-    isim_alani = new javax.swing.JTextField();
     kimlik_alani = new javax.swing.JTextField();
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
+    sifre_alani = new javax.swing.JPasswordField();
     jPanel2 = new javax.swing.JPanel();
     register = new javax.swing.JButton();
     login = new javax.swing.JButton();
@@ -45,12 +45,10 @@ public class Login extends JFrame implements ActionListener {
 
     jPanel1.setBackground(new java.awt.Color(153, 255, 255));
 
-    isim_alani.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
     kimlik_alani.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    jLabel1.setText("Ad Soyad:");
+    jLabel1.setText("Şifre :");
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jLabel2.setText("TC Kimlik No:");
@@ -58,30 +56,31 @@ public class Login extends JFrame implements ActionListener {
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel1Layout.createSequentialGroup().addGap(85, 85, 85)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+            jPanel1Layout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 184,
+                            javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(sifre_alani))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 184,
+                            javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(kimlik_alani,
+                            javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(204, 204, 204)));
+    jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup().addGap(76, 76, 76)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(kimlik_alani, javax.swing.GroupLayout.PREFERRED_SIZE, 33,
+                    javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33,
+                    javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                    Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(isim_alani)
-                .addComponent(kimlik_alani, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
-            .addContainerGap(218, Short.MAX_VALUE)));
-    jPanel1Layout
-        .setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup().addGap(84, 84, 84)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(isim_alani, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                            javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(kimlik_alani, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
-                            javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap(131, Short.MAX_VALUE)));
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addComponent(sifre_alani))
+            .addContainerGap(128, Short.MAX_VALUE)));
 
     jPanel2.setBackground(new java.awt.Color(102, 255, 255));
 
@@ -89,6 +88,7 @@ public class Login extends JFrame implements ActionListener {
     register.setForeground(new java.awt.Color(51, 51, 255));
     register.setText("Kayit Ol");
     register.addActionListener(this);
+
     login.setBackground(new java.awt.Color(255, 102, 102));
     login.setForeground(new java.awt.Color(51, 51, 255));
     login.setText("Giriş Yap");
@@ -133,18 +133,17 @@ public class Login extends JFrame implements ActionListener {
   public void actionPerformed(ActionEvent e) {
 
     if (e.getSource() == login) {
-      this.adSoyad = isim_alani.getText();
+      this.sifre = String.valueOf(sifre_alani.getPassword());
       this.tcKimlikNo = kimlik_alani.getText();
       try {
         ResultSet result = db.executeQuery("select * from  hastane.hastalar where tc = " + this.tcKimlikNo + " ;");
         if (!result.next())
           JOptionPane.showMessageDialog(this, "Hiçbir kullanıcı bulunmamaktadır...");
         else {
-
-          // şuan anlayamadığım bir ibnelik var
-
-          if (result.getString(3).toString() == this.adSoyad) {
-            System.out.println("sa"); // -----> ana menü penceresi açılması gereken yer
+          if (result.getString(3).equals(this.sifre)) {
+            new AnaSayfa();
+            this.dispose();
+            isSucsesful = true;
           } else {
             JOptionPane.showMessageDialog(this, "Hatalı şifre !!!");
           }
