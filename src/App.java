@@ -13,7 +13,7 @@ public class App {
         // -- tc ile zaten kayıt olunmuşsa zanten kayıt olunmuş hatası
         // -- tc yerine string girilirse hata
         //
-        // login olurken:
+        // login olurken:<
         // -- şifre dogrulandiğinda ana sayfa oluşturma
         // -- userı nerde oluşturucağına karar ver
         //

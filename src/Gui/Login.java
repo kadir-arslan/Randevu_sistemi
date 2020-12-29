@@ -141,7 +141,7 @@ public class Login extends JFrame implements ActionListener {
           JOptionPane.showMessageDialog(this, "Hiçbir kullanıcı bulunmamaktadır...");
         else {
           if (result.getString(3).equals(this.sifre)) {
-            new AnaSayfa();
+            new AnaSayfa(this.db);
             this.dispose();
             isSucsesful = true;
           } else {
