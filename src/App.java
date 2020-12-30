@@ -1,3 +1,4 @@
+
 import Connection.Jdbc;
 import User.User;
 import User.Hasta;
@@ -6,7 +7,7 @@ import Gui.Login;
 public class App {
     public static void main(String[] args) throws Exception {
         Jdbc db = new Jdbc();
-        Login n = new Login(db);
+        new Login(db);
 
         // TODO:
         // kayıt olurken :
@@ -21,11 +22,12 @@ public class App {
         // -- tablolara degerleri db çekmek
         // -- çekilen değerlerin işlenmesi
         //
-        //
+        // -->User sınıfı rework
         //
         // -> yeni randevu :
-        // --tamammı
-        //
+        // -- randevun selicilirken tarih seçildikten sonra doktorluk seçilirse sıkıntı
+        // oluyor
+        // -- randevu alırken boş kutucuk olursa hata verdirt
         //
 
     }
