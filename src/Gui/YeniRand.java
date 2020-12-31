@@ -1,29 +1,22 @@
 package Gui;
 
+import User.*;
 import java.util.*;
-import Connection.*;
+
 import java.awt.event.*;
 import javax.swing.*;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class YeniRand extends JFrame implements ActionListener {
 
-        private String tc;
-        private String selectedpol_id;
-        private Jdbc db;
-        private String selectedpol;
-        private String selecteddok_id;
-        private String selecteddok;
-        private String selectedtarih;
-        private String selectedseans;
+        public User user;
+
         private Vector<String> pol = new Vector<String>();
         private Vector<String> dok = new Vector<String>();
         private Vector<String> seans = new Vector<String>();
+
         private javax.swing.JButton jButton1;
         private javax.swing.JComboBox<String> jComboBox1;
         private javax.swing.JComboBox<String> jComboBox2;
@@ -35,20 +28,11 @@ public class YeniRand extends JFrame implements ActionListener {
         private javax.swing.JLabel jLabel4;
         private javax.swing.JPanel jPanel1;
 
-        public YeniRand(Jdbc db, String tc) {
+        public YeniRand(User user) {
 
-                this.db = db;
-                this.tc = tc;
+                this.user = user;
 
-                try {
-                        ResultSet result = this.db.executeQuery("SELECT * FROM hastane.poliklinik;");
-                        pol.add("defualt");
-                        while (result.next()) {
-                                pol.add(result.getString(2));
-                        }
-                } catch (SQLException e) {
-                        e.printStackTrace();
-                }
+                pol = user.getPoliklinikList();
 
                 initComponents();
                 this.setVisible(true);
@@ -70,38 +54,14 @@ public class YeniRand extends JFrame implements ActionListener {
                 setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
                 jPanel1.setBackground(new java.awt.Color(204, 255, 255));
-                // jPanel1.addComponentListener(new java.awt.event.ComponentAdapter() {
-                // public void componentResized(java.awt.event.ComponentEvent evt) {
-                // jPanel1.ComponentResized(evt);
-                // }
-                // });
 
                 jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(pol));
 
                 jComboBox1.addItemListener((ItemEvent e) -> {
                         if (e.getStateChange() == ItemEvent.SELECTED) {
-                                selectedpol = jComboBox1.getSelectedItem().toString();
-                                try {
-                                        ResultSet result = this.db.executeQuery(
-                                                        "select pol_id FROM hastane.poliklinik where pol_name = '"
-                                                                        + jComboBox1.getSelectedItem().toString()
-                                                                        + "';");
-                                        if (result.next()) {
-                                                selectedpol_id = result.getString(1);
-                                        }
-                                        ResultSet result2 = this.db.executeQuery(
-                                                        "SELECT * FROM hastane.doktorlar WHERE dok_pol_id = '"
-                                                                        + selectedpol_id + "';");
-                                        dok.clear();
-                                        dok.add("defualt");
-                                        while (result2.next()) {
-                                                dok.add(result2.getString(2));
-                                        }
-
-                                } catch (SQLException ex) {
-                                        ex.printStackTrace();
-                                }
+                                user.selectedpol(jComboBox1.getSelectedItem().toString());
+                                dok = user.getDoktroList();
                                 jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(dok));
 
                         }
@@ -114,14 +74,19 @@ public class YeniRand extends JFrame implements ActionListener {
                 jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jComboBox2.addItemListener(e -> {
                         if (e.getStateChange() == ItemEvent.SELECTED) {
-                                selecteddok = jComboBox2.getSelectedItem().toString();
+                                user.setSelectedDok(jComboBox2.getSelectedItem().toString());
+
+                                if (user.getSelectedTarih() != null) {
+                                        seans = user.getseans();
+                                        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(seans));
+                                }
                         }
                 });
 
                 jLabel2.setBackground(new java.awt.Color(0, 153, 153));
                 jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jLabel2.setForeground(new java.awt.Color(255, 0, 51));
-                jLabel2.setText(" Doktorunuzu seçiiniz :");
+                jLabel2.setText(" Doktorunuzu seçiniz :");
 
                 jLabel3.setBackground(new java.awt.Color(0, 153, 153));
                 jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -144,45 +109,12 @@ public class YeniRand extends JFrame implements ActionListener {
                 jDateChooser1.addPropertyChangeListener(e -> {
                         if ("date".equals(e.getPropertyName())) {
                                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                selectedtarih = dateFormat.format(jDateChooser1.getDate());
+                                user.setSelectedtarih(dateFormat.format(jDateChooser1.getDate()));
                                 Date date = (Date) e.getNewValue();
                                 if (date.getDay() == 0) {
                                         JOptionPane.showMessageDialog(this, "Pazar gününe randevu alınamaz .");
                                 } else {
-                                        try {
-                                                ResultSet result = this.db.executeQuery(
-                                                                "select dok_id From hastane.doktorlar where dok_name = '"
-                                                                                + selecteddok + "' and dok_pol_id = '"
-                                                                                + selectedpol_id + "'");
-                                                if (result.next()) {
-                                                        selecteddok_id = result.getString(1);
-                                                }
-                                                result = this.db.executeQuery("select * from hastane.hafta where gun ='"
-                                                                + selectedtarih + "' and h_dok_id = '" + selecteddok_id
-                                                                + "'");
-                                                if (!result.next()) {
-                                                        this.db.executeUpdate(
-                                                                        "INSERT INTO hastane.hafta(h_dok_id,gun) values("
-                                                                                        + selecteddok_id + ",'"
-                                                                                        + selectedtarih + "');");
-                                                        result = this.db.executeQuery(
-                                                                        "select * from hastane.hafta where gun ='"
-                                                                                        + selectedtarih
-                                                                                        + "' and h_dok_id = '"
-                                                                                        + selecteddok_id + "'");
-                                                        result.next();
-                                                }
-                                                ResultSetMetaData rsmd = result.getMetaData();
-                                                seans.clear();
-                                                seans.add("default");
-                                                for (int i = 3; i <= 16; i++) {
-                                                        if (result.getString(i) == null)
-                                                                seans.add(rsmd.getColumnName(i));
-                                                }
-
-                                        } catch (SQLException ex) {
-                                                ex.printStackTrace();
-                                        }
+                                        seans = user.getseans();
                                         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(seans));
                                 }
                         }
@@ -191,7 +123,7 @@ public class YeniRand extends JFrame implements ActionListener {
                 jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jComboBox3.addItemListener(e -> {
                         if (e.getStateChange() == ItemEvent.SELECTED) {
-                                selectedseans = jComboBox3.getSelectedItem().toString();
+                                user.selectedseans(jComboBox3.getSelectedItem().toString());
                         }
                 });
 
@@ -326,16 +258,10 @@ public class YeniRand extends JFrame implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == jButton1) {
-                        try {
-                                this.db.executeUpdate("UPDATE hastane.hafta SET " + selectedseans + " = " + tc
-                                                + " Where h_dok_id = " + selecteddok_id + " and gun = '" + selectedtarih
-                                                + "';");
-                                JOptionPane.showMessageDialog(this, "Randevu başarılı şekilde alındı.");
-                                this.dispose();
+                        user.setRandevu();
+                        JOptionPane.showMessageDialog(this, "Randevu başarılı şekilde alındı.");
+                        this.dispose();
 
-                        } catch (Exception ex) {
-                                ex.printStackTrace();
-                        }
                 }
 
         }

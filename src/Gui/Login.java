@@ -10,11 +10,10 @@ import java.awt.event.*;
 
 public class Login extends JFrame implements ActionListener {
 
-  public boolean isSucsesful = false;
   private String sifre;
-  private String adSoyad;
   private String tcKimlikNo;
   private Jdbc db = null;
+  public User user;
 
   private javax.swing.JPasswordField sifre_alani;
   private javax.swing.JLabel jLabel1;
@@ -159,9 +158,10 @@ public class Login extends JFrame implements ActionListener {
           JOptionPane.showMessageDialog(this, "Hiçbir kullanıcı bulunmamaktadır...");
         else {
           if (result.getString(3).equals(this.sifre)) {
-            new AnaSayfa(this.db, this.tcKimlikNo);
+            user = new Hasta(this.tcKimlikNo, this.sifre, this.db);
+            new AnaSayfa(this.user);
             this.dispose();
-            isSucsesful = true;
+
           } else {
             JOptionPane.showMessageDialog(this, "Hatalı şifre !!!");
           }

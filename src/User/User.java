@@ -1,13 +1,28 @@
 package User;
 
+import Connection.Jdbc;
+import java.util.Vector;
+
 public interface User {
+  public String getSelectedTarih();
 
-  public void getPoliklinikList();
+  public String getName();
 
-  public void getDoktroList(int pol_id);
+  public String getTc();
 
-  public void getProgramList(int dok_id);
+  public void setSelectedDok(String selecteddok);
 
-  public void getseans(int dok_id, String saat);
+  public void selectedpol(String selectedpol);
 
+  public void selectedseans(String selectedseans);
+
+  public void setSelectedtarih(String selectedtarih);
+
+  public Vector<String> getPoliklinikList();
+
+  public Vector<String> getDoktroList();
+
+  public Vector<String> getseans();
+
+  public void setRandevu();
 }

@@ -14,20 +14,13 @@ public class App {
         // -- tc ile zaten kayıt olunmuşsa zanten kayıt olunmuş hatası
         // -- tc yerine string girilirse hata
         //
-        // login olurken:<
-        // -- şifre dogrulandiğinda ana sayfa oluşturma
-        // -- userı nerde oluşturucağına karar ver
-        //
         // -> ana sayfa :
         // -- tablolara degerleri db çekmek
         // -- çekilen değerlerin işlenmesi
-        //
-        // -->User sınıfı rework
+
         //
         // -> yeni randevu :
-        // -- randevun selicilirken tarih seçildikten sonra doktorluk seçilirse sıkıntı
-        // oluyor
-        // -- randevu alırken boş kutucuk olursa hata verdirt
+        // --[bug] randevu alırken pol değişince default a seans cıkartırıyor
         //
 
     }

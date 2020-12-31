@@ -1,10 +1,13 @@
 package Gui;
 
+import User.*;
 import Connection.*;
 import javax.swing.*;
 import java.awt.event.*;
 
 public class AnaSayfa extends JFrame implements ActionListener {
+
+        public User user;
         private String tc;
         private Jdbc db;
         private javax.swing.JButton jButton1;
@@ -18,9 +21,9 @@ public class AnaSayfa extends JFrame implements ActionListener {
         private javax.swing.JTextField jTextField1;
         private javax.swing.JTextField jTextField2;
 
-        public AnaSayfa(Jdbc db, String tc) {
-                this.tc = tc;
-                this.db = db;
+        public AnaSayfa(User user) {
+                this.user = user;
+
                 initComponents();
                 this.setVisible(true);
         }
@@ -45,12 +48,18 @@ public class AnaSayfa extends JFrame implements ActionListener {
 
                 jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jTextField1.setPreferredSize(new java.awt.Dimension(70, 70));
+                jTextField1.setEditable(false);
+                jTextField1.setText(user.getName());
+                jTextField1.setBorder(null);
 
                 jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jLabel1.setText("TC Kimlik No:");
 
                 jTextField2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jTextField2.setPreferredSize(new java.awt.Dimension(70, 70));
+                jTextField2.setEditable(false);
+                jTextField2.setText(user.getTc());
+                jTextField2.setBorder(null);
 
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object[][] { { null, null, null } },
                                 new String[] { "Tarih", "Poliklinik", "Doktor" }));
@@ -202,7 +211,7 @@ public class AnaSayfa extends JFrame implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == jButton1) {
-                        new YeniRand(this.db, this.tc);
+                        new YeniRand(this.user);
                 }
         }
 
