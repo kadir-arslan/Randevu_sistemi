@@ -1,7 +1,5 @@
 
 import Connection.Jdbc;
-import User.User;
-import User.Hasta;
 import Gui.Login;
 
 public class App {
@@ -17,9 +15,10 @@ public class App {
         // -> ana sayfa :
         // -- tablolara degerleri db çekmek
         // -- çekilen değerlerin işlenmesi
-
+        // --iconlar
         //
         // -> yeni randevu :
+        // -- bir kişi aynı gün aynı poliklinikten sadece bir randevu alabir yap
         // --[bug] randevu alırken pol değişince default a seans cıkartırıyor
         //
 

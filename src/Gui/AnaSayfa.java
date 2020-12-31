@@ -1,31 +1,42 @@
 package Gui;
 
 import User.*;
-import Connection.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class AnaSayfa extends JFrame implements ActionListener {
 
         public User user;
-        private String tc;
-        private Jdbc db;
-        private javax.swing.JButton jButton1;
-        private javax.swing.JButton jButton2;
-        private javax.swing.JButton jButton3;
+        private javax.swing.JButton güncelle_butonu;
+        private javax.swing.JTable hasta_tablosu;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JLabel jLabel3;
         private javax.swing.JPanel jPanel1;
         private javax.swing.JScrollPane jScrollPane1;
-        private javax.swing.JTable jTable1;
         private javax.swing.JTextField jTextField1;
         private javax.swing.JTextField jTextField2;
+        private javax.swing.JButton silme_butonu;
+        private javax.swing.JButton yeni_randevu;
+        private DefaultTableModel model;
 
         public AnaSayfa(User user) {
                 this.user = user;
 
                 initComponents();
                 this.setVisible(true);
+                model = (DefaultTableModel) hasta_tablosu.getModel();
+                // populatin table
+                model.setRowCount(0);
+                ArrayList<String[]> randList;
+                randList = user.getRandList();
+                for (String[] x : randList) {
+                        model.addRow(x);
+                }
+
         }
 
         private void initComponents() {
@@ -36,10 +47,10 @@ public class AnaSayfa extends JFrame implements ActionListener {
                 jLabel1 = new javax.swing.JLabel();
                 jTextField2 = new javax.swing.JTextField();
                 jScrollPane1 = new javax.swing.JScrollPane();
-                jTable1 = new javax.swing.JTable();
-                jButton1 = new javax.swing.JButton();
-                jButton2 = new javax.swing.JButton();
-                jButton3 = new javax.swing.JButton();
+                hasta_tablosu = new javax.swing.JTable();
+                yeni_randevu = new javax.swing.JButton();
+                silme_butonu = new javax.swing.JButton();
+                güncelle_butonu = new javax.swing.JButton();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,36 +72,52 @@ public class AnaSayfa extends JFrame implements ActionListener {
                 jTextField2.setText(user.getTc());
                 jTextField2.setBorder(null);
 
-                jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object[][] { { null, null, null } },
-                                new String[] { "Tarih", "Poliklinik", "Doktor" }));
-                jTable1.setRowHeight(25);
-                jScrollPane1.setViewportView(jTable1);
+                hasta_tablosu.setModel(
+                                new javax.swing.table.DefaultTableModel(new Object[][] { { null, null, null, null } },
+                                                new String[] { "Tarih", "Saat", "Poliklinik", "Doktor" }) {
+                                        boolean[] canEdit = new boolean[] { false, false, false, false };
 
-                jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-                jButton1.setIcon(new javax.swing.ImageIcon("")); // NOI18N//
-                                                                 // icon***********************************
-                jButton1.setText("YENİ RANDEVU OLUŞTUR");
-                jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                                        public boolean isCellEditable(int rowIndex, int columnIndex) {
+                                                return canEdit[columnIndex];
+                                        }
+                                });
+                hasta_tablosu.setRowHeight(25);
+                jScrollPane1.setViewportView(hasta_tablosu);
+                if (hasta_tablosu.getColumnModel().getColumnCount() > 0) {
+                        hasta_tablosu.getColumnModel().getColumn(0).setResizable(false);
+                        hasta_tablosu.getColumnModel().getColumn(1).setResizable(false);
+                        hasta_tablosu.getColumnModel().getColumn(2).setResizable(false);
+                        hasta_tablosu.getColumnModel().getColumn(3).setResizable(false);
+                }
 
-                jButton1.addActionListener(this);
+                yeni_randevu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+                yeni_randevu.setIcon(new javax.swing.ImageIcon(getClass().getResource(""))); // NOI18N
+                yeni_randevu.setText("YENİ RANDEVU OLUŞTUR");
+                yeni_randevu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                yeni_randevu.addActionListener(e -> {
+                        new YeniRand(this.user);
+                });
 
-                jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-                jButton2.setIcon(new javax.swing.ImageIcon("")); // NOI18N//
-                                                                 // icon***********************************
-                jButton2.setText(" Sil");
-                jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-                jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-                jButton2.setMargin(new java.awt.Insets(2, 5, 2, 5));
-                jButton2.setMaximumSize(new java.awt.Dimension(10, 10));
-                jButton2.setMinimumSize(new java.awt.Dimension(10, 10));
-                jButton2.setPreferredSize(new java.awt.Dimension(10, 10));
+                silme_butonu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+                silme_butonu.setIcon(new javax.swing.ImageIcon("")); // NOI18N
+                silme_butonu.setText(" Sil");
+                silme_butonu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                silme_butonu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                silme_butonu.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                silme_butonu.setMargin(new java.awt.Insets(2, 5, 2, 5));
+                silme_butonu.setMaximumSize(new java.awt.Dimension(10, 10));
+                silme_butonu.setMinimumSize(new java.awt.Dimension(10, 10));
+                silme_butonu.setPreferredSize(new java.awt.Dimension(10, 10));
+                silme_butonu.addActionListener(e -> {
+                });
 
-                jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-                jButton3.setIcon(new javax.swing.ImageIcon("")); // NOI18N // icon***********************************
-                jButton3.setText("Güncelle");
-                jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                güncelle_butonu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+                güncelle_butonu.setIcon(new javax.swing.ImageIcon("")); // NOI18N
+                güncelle_butonu.setText("Güncelle");
+                güncelle_butonu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                güncelle_butonu.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                güncelle_butonu.addActionListener(e -> {
+                });
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
@@ -134,16 +161,16 @@ public class AnaSayfa extends JFrame implements ActionListener {
                                                                 .addGap(18, 18, 18)
                                                                 .addGroup(jPanel1Layout.createParallelGroup(
                                                                                 javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(jButton2,
+                                                                                .addComponent(silme_butonu,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 138,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(jButton3,
+                                                                                .addComponent(güncelle_butonu,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 138,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                 .addGroup(jPanel1Layout.createSequentialGroup().addGap(259, 259, 259)
-                                                                .addComponent(jButton1)))
+                                                                .addComponent(yeni_randevu)))
                                                 .addContainerGap(19, Short.MAX_VALUE)));
                 jPanel1Layout.setVerticalGroup(jPanel1Layout
                                 .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,20 +205,20 @@ public class AnaSayfa extends JFrame implements ActionListener {
                                                                                                 240,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                 .addGap(18, 18, 18)
-                                                                                .addComponent(jButton1,
+                                                                                .addComponent(yeni_randevu,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 73,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                 .addContainerGap(19, Short.MAX_VALUE))
                                                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                                                                 .addGap(0, 0, Short.MAX_VALUE)
-                                                                                .addComponent(jButton2,
+                                                                                .addComponent(silme_butonu,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 46,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                 .addPreferredGap(
                                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                .addComponent(jButton3,
+                                                                                .addComponent(güncelle_butonu,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 50,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,7 +237,7 @@ public class AnaSayfa extends JFrame implements ActionListener {
         }
 
         public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == jButton1) {
+                if (e.getSource() == yeni_randevu) {
                         new YeniRand(this.user);
                 }
         }

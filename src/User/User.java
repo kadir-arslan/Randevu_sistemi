@@ -1,7 +1,11 @@
 package User;
 
 import Connection.Jdbc;
+
+import java.util.ArrayList;
 import java.util.Vector;
+
+import javax.print.DocFlavor.STRING;
 
 public interface User {
   public String getSelectedTarih();
@@ -25,4 +29,6 @@ public interface User {
   public Vector<String> getseans();
 
   public void setRandevu();
+
+  public ArrayList<String[]> getRandList();
 }

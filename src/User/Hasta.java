@@ -3,6 +3,7 @@ package User;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import Connection.Jdbc;
@@ -149,6 +150,54 @@ public class Hasta implements User {
     selectedtarih = null;
     selectedseans = null;
 
+  }
+
+  public ArrayList<String[]> getRandList() {
+    ArrayList<String[]> ret = new ArrayList<String[]>();
+
+    try {
+      ResultSet result = this.db
+          .executeQuery("select * from hastane.hafta where s9 = " + this.tc + "  or s9_30 = " + this.tc + " or s10 = "
+              + this.tc + " or s10_30 = " + this.tc + " or s11 = " + this.tc + " or s11_30 = " + this.tc + " or s13 = "
+              + this.tc + " or s13_30 = " + this.tc + " or s14 = " + this.tc + " or s14_30 = " + this.tc + "  or s15 = "
+              + this.tc + " or s15_30 = " + this.tc + " or s16 = " + this.tc + " or s16_30 = " + this.tc + ";");
+      ResultSetMetaData rsmd = result.getMetaData();
+      while (result.next()) {
+        String[] row = new String[4];
+        row[0] = result.getString(2);
+        for (int i = 3; i <= 16; i++) {
+          if (result.getString(i) != null) {
+            if (result.getString(i).equals(this.tc)) {
+              row[1] = rsmd.getColumnName(i);
+              break;
+            }
+          }
+        }
+        row[2] = result.getString(1);
+        row[3] = result.getString(1);
+        ret.add(row);
+      }
+
+      for (String[] strings : ret) {
+        result = this.db.executeQuery(
+            "SELECT pol_name FROM hastane.poliklinik WHERE pol_id in(SELECT dok_pol_id FROM hastane.doktorlar WHERE dok_id = '"
+                + strings[2] + "' );");
+        result.next();
+        strings[2] = result.getString(1);// dok_id değerinden poliklink adına
+
+      }
+      for (String[] strings : ret) {
+        result = this.db.executeQuery("SELECT dok_name FROM hastane.doktorlar WHERE dok_id = '" + strings[3] + "';");
+        result.next();
+        strings[3] = result.getString(1);// dok_id değerinden dok_name değerine
+
+      }
+
+      return ret;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
 }

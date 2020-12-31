@@ -43,4 +43,8 @@ public class Jdbc {
     this.statement.executeUpdate(update);
   }
 
+  public void close() {
+    this.close();
+  }
+
 }
