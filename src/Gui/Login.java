@@ -166,7 +166,7 @@ public class Login extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Hatalı şifre !!!");
           }
         }
-      } catch (Exception ex) {
+      } catch (SQLException ex) {
         ex.printStackTrace();
       }
     }

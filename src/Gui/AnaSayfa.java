@@ -6,7 +6,6 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class AnaSayfa extends JFrame implements ActionListener {
 
@@ -27,9 +26,9 @@ public class AnaSayfa extends JFrame implements ActionListener {
                 this.user = user;
 
                 initComponents();
-                this.setVisible(true);
                 model = (DefaultTableModel) hasta_tablosu.getModel();
-                // populatin table
+                this.setVisible(true);
+
                 model.setRowCount(0);
                 ArrayList<String[]> randList;
                 randList = user.getRandList();
@@ -109,6 +108,21 @@ public class AnaSayfa extends JFrame implements ActionListener {
                 silme_butonu.setMinimumSize(new java.awt.Dimension(10, 10));
                 silme_butonu.setPreferredSize(new java.awt.Dimension(10, 10));
                 silme_butonu.addActionListener(e -> {
+                        int selectedRow = hasta_tablosu.getSelectedRow();
+                        if (selectedRow == -1) {
+
+                        } else {
+                                user.randevuSil(model.getValueAt(selectedRow, 0).toString(),
+                                                model.getValueAt(selectedRow, 1).toString(),
+                                                model.getValueAt(selectedRow, 2).toString(),
+                                                model.getValueAt(selectedRow, 3).toString());
+                        }
+                        model.setRowCount(0);
+                        ArrayList<String[]> randList;
+                        randList = user.getRandList();
+                        for (String[] x : randList) {
+                                model.addRow(x);
+                        }
                 });
 
                 güncelle_butonu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -117,6 +131,12 @@ public class AnaSayfa extends JFrame implements ActionListener {
                 güncelle_butonu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 güncelle_butonu.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
                 güncelle_butonu.addActionListener(e -> {
+                        model.setRowCount(0);
+                        ArrayList<String[]> randList;
+                        randList = user.getRandList();
+                        for (String[] x : randList) {
+                                model.addRow(x);
+                        }
                 });
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

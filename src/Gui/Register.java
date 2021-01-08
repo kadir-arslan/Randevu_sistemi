@@ -3,6 +3,8 @@ package Gui;
 import Connection.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 public class Register extends JFrame implements ActionListener {
 
@@ -35,7 +37,7 @@ public class Register extends JFrame implements ActionListener {
                 jLabel2 = new javax.swing.JLabel();
                 jLabel3 = new javax.swing.JLabel();
                 sifre_alani = new javax.swing.JPasswordField();
-                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
                 jPanel1.setBackground(new java.awt.Color(204, 255, 255));
                 jPanel1.setPreferredSize(new java.awt.Dimension(800, 550));
@@ -166,9 +168,11 @@ public class Register extends JFrame implements ActionListener {
                                 JOptionPane.showMessageDialog(this,
                                                 "Başarılı şekilde kayıt işlemi gerçekleştirildi !!!");
                                 this.dispose();
-                        } catch (Exception ex) {
-                                // yanlış girdiler için düzenlenmes gerek
-                                ex.printStackTrace();
+                        } catch (SQLIntegrityConstraintViolationException ex) {
+                                JOptionPane.showMessageDialog(this, "Önceden kayıt yapılmış !");
+                                this.dispose();
+                        } catch (SQLException e1) {
+                                e1.printStackTrace();
                         }
                 }
         }

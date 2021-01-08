@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 import Connection.Jdbc;
 
 public class Hasta implements User {
@@ -51,7 +53,7 @@ public class Hasta implements User {
     this.selecteddok = selecteddok;
   }
 
-  public void selectedpol(String selectedpol) {
+  public void setSelectedPol(String selectedpol) {
     this.selectedpol = selectedpol;
   }
 
@@ -61,6 +63,29 @@ public class Hasta implements User {
 
   public void setSelectedtarih(String selectedtarih) {
     this.selectedtarih = selectedtarih;
+  }
+
+  public String getPolId(String polName) {
+    try {
+      ResultSet res = this.db.executeQuery("select pol_id FROM hastane.poliklinik where pol_name = '" + polName + "';");
+      res.next();
+      return res.getString(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public String getDokId(String dokName, String PolId) {
+    try {
+      ResultSet res = this.db.executeQuery("select dok_id FROM hastane.doktorlar where dok_name = '" + dokName
+          + "' AND  dok_pol_id = '" + PolId + "' ;");
+      res.next();
+      return res.getString(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   public Vector<String> getPoliklinikList() {
@@ -138,17 +163,18 @@ public class Hasta implements User {
     try {
       this.db.executeUpdate("UPDATE hastane.hafta SET " + this.selectedseans + " = " + this.tc + " Where h_dok_id = "
           + this.selecteddok_id + " and gun = '" + this.selectedtarih + "';");
+      JOptionPane.showMessageDialog(null, "Randevu başarılı şekilde alındı.");
 
     } catch (Exception ex) {
-      ex.printStackTrace();
+      JOptionPane.showMessageDialog(null, "Randevu alma işllemi gerçekleştirilemedi.");
     }
 
-    selectedpol_id = null;
-    selectedpol = null;
-    selecteddok_id = null;
-    selecteddok = null;
-    selectedtarih = null;
-    selectedseans = null;
+    this.selectedpol_id = null;
+    this.selectedpol = null;
+    this.selecteddok_id = null;
+    this.selecteddok = null;
+    this.selectedtarih = null;
+    this.selectedseans = null;
 
   }
 
@@ -198,6 +224,27 @@ public class Hasta implements User {
       e.printStackTrace();
       return null;
     }
+  }
+
+  public void randevuSil(String tarih, String saat, String pol, String dok) {
+
+    this.selectedpol = pol;
+    this.selecteddok = dok;
+
+    this.selectedpol_id = getPolId(selectedpol);
+    this.selecteddok_id = getDokId(this.selecteddok, this.selectedpol_id);
+
+    try {
+      this.db.executeUpdate("UPDATE hastane.hafta SET " + saat + " = null Where h_dok_id = " + this.selecteddok_id
+          + " and gun = '" + tarih + "';");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    this.selectedpol_id = null;
+    this.selectedpol = null;
+    this.selecteddok_id = null;
+    this.selecteddok = null;
   }
 
 }

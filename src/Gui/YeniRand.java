@@ -60,7 +60,7 @@ public class YeniRand extends JFrame implements ActionListener {
 
                 jComboBox1.addItemListener((ItemEvent e) -> {
                         if (e.getStateChange() == ItemEvent.SELECTED) {
-                                user.selectedpol(jComboBox1.getSelectedItem().toString());
+                                user.setSelectedPol(jComboBox1.getSelectedItem().toString());
                                 dok = user.getDoktroList();
                                 jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(dok));
 
@@ -259,7 +259,7 @@ public class YeniRand extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == jButton1) {
                         user.setRandevu();
-                        JOptionPane.showMessageDialog(this, "Randevu başarılı şekilde alındı.");
+
                         this.dispose();
 
                 }

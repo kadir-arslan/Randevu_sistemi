@@ -8,18 +8,14 @@ public class App {
         new Login(db);
 
         // TODO:
-        // kayıt olurken :
-        // -- tc ile zaten kayıt olunmuşsa zanten kayıt olunmuş hatası
-        // -- tc yerine string girilirse hata
         //
         // -> ana sayfa :
-        // -- tablolara degerleri db çekmek
-        // -- çekilen değerlerin işlenmesi
-        // --iconlar
+        // --> tarihe göre sırala
+        // --> iconlar
         //
         // -> yeni randevu :
-        // -- bir kişi aynı gün aynı poliklinikten sadece bir randevu alabir yap
-        // --[bug] randevu alırken pol değişince default a seans cıkartırıyor
+        // --> bir kişi aynı gün aynı poliklinikten sadece bir randevu alabir yap
+        // -->[bug] randevu alırken pol değişince default a seans cıkartırıyor
         //
 
     }

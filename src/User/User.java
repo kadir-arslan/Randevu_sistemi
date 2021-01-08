@@ -1,11 +1,7 @@
 package User;
 
-import Connection.Jdbc;
-
 import java.util.ArrayList;
 import java.util.Vector;
-
-import javax.print.DocFlavor.STRING;
 
 public interface User {
   public String getSelectedTarih();
@@ -14,9 +10,11 @@ public interface User {
 
   public String getTc();
 
+  public String getPolId(String polName);
+
   public void setSelectedDok(String selecteddok);
 
-  public void selectedpol(String selectedpol);
+  public void setSelectedPol(String selectedpol);
 
   public void selectedseans(String selectedseans);
 
@@ -31,4 +29,6 @@ public interface User {
   public void setRandevu();
 
   public ArrayList<String[]> getRandList();
+
+  public void randevuSil(String tarih, String saat, String pol, String dok);
 }
