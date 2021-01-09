@@ -15,14 +15,16 @@ public class Login extends JFrame implements ActionListener {
   private Jdbc db = null;
   public User user;
 
-  private javax.swing.JPasswordField sifre_alani;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
-  private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
+  private javax.swing.JLabel jLabel3;
+  private keeptoo.KGradientPanel kGradientPanel1;
+  private keeptoo.KGradientPanel kGradientPanel2;
   private javax.swing.JTextField kimlik_alani;
-  private javax.swing.JButton login;
-  private javax.swing.JButton register;
+  private keeptoo.KButton login;
+  private keeptoo.KButton register;
+  private javax.swing.JPasswordField sifre_alani;
+  private javax.swing.JCheckBox sifre_goster2;
 
   public Login(Jdbc db) {
     this.db = db;
@@ -31,119 +33,206 @@ public class Login extends JFrame implements ActionListener {
   }
 
   private void initComponents() {
-    jPanel1 = new javax.swing.JPanel();
+
+    kGradientPanel1 = new keeptoo.KGradientPanel();
+    jLabel3 = new javax.swing.JLabel();
+    kGradientPanel2 = new keeptoo.KGradientPanel();
+    jLabel2 = new javax.swing.JLabel();
     kimlik_alani = new javax.swing.JTextField();
     jLabel1 = new javax.swing.JLabel();
-    jLabel2 = new javax.swing.JLabel();
     sifre_alani = new javax.swing.JPasswordField();
-    jPanel2 = new javax.swing.JPanel();
-    register = new javax.swing.JButton();
-    login = new javax.swing.JButton();
+    sifre_goster2 = new javax.swing.JCheckBox();
+    login = new keeptoo.KButton();
+    register = new keeptoo.KButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize(new java.awt.Dimension(800, 550));
+    setMaximumSize(new java.awt.Dimension(1000, 600));
+    setMinimumSize(new java.awt.Dimension(1000, 600));
+    setResizable(false);
 
-    jPanel1.setBackground(new java.awt.Color(153, 255, 255));
-    jPanel1.setPreferredSize(new java.awt.Dimension(800, 275));
+    kGradientPanel1.setkEndColor(new java.awt.Color(204, 255, 255));
+    kGradientPanel1.setkStartColor(new java.awt.Color(0, 153, 153));
 
-    kimlik_alani.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jLabel3.setFont(new java.awt.Font("Cambria Math", 3, 48)); // NOI18N
+    jLabel3.setForeground(new java.awt.Color(102, 0, 102));
+    jLabel3.setText("      HOŞGELDİNİZ");
 
-    jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    jLabel1.setText("Şifre :");
+    kGradientPanel2.setkEndColor(new java.awt.Color(255, 255, 255));
+    kGradientPanel2.setkStartColor(new java.awt.Color(255, 255, 255));
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jLabel2.setText("TC Kimlik No:");
 
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-            jPanel1Layout.createSequentialGroup().addContainerGap(178, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                        jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 185,
-                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(16, 16, 16))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                        jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 185,
-                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    kimlik_alani.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    kimlik_alani.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(153, 0, 153)));
+    // kimlik_alani.addActionListener(this);
+    kimlik_alani.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyPressed(java.awt.event.KeyEvent evt) {
+        kimlik_alaniKeyPressed(evt);
+      }
+    });
+
+    jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jLabel1.setText("Şifre :");
+
+    sifre_alani.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(153, 0, 153)));
+    // sifre_alani.addActionListener(new java.awt.event.ActionListener() {
+    // public void actionPerformed(java.awt.event.ActionEvent evt) {
+    // sifre_alaniActionPerformed(evt);
+    // }
+    // });
+
+    sifre_goster2.setBackground(new java.awt.Color(255, 255, 255));
+    sifre_goster2.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
+    sifre_goster2.setText("Şifreyi göster");
+    sifre_goster2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(51, 51, 255)));
+    sifre_goster2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        sifre_goster2ActionPerformed(evt);
+      }
+    });
+
+    // login.setIcon(new
+    // javax.swing.ImageIcon(getClass().getResource("/proje/icon/user.png"))); //
+    // NOI18N
+    login.setText("GİRİŞ YAP");
+    login.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    login.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    login.setkBackGroundColor(new java.awt.Color(255, 153, 153));
+    login.setkBorderRadius(30);
+    login.setkEndColor(new java.awt.Color(204, 0, 51));
+    login.setkHoverEndColor(new java.awt.Color(51, 51, 51));
+    login.setkHoverForeGround(new java.awt.Color(102, 0, 102));
+    login.setkHoverStartColor(new java.awt.Color(204, 204, 204));
+    login.setkSelectedColor(new java.awt.Color(153, 255, 153));
+    login.addActionListener(this);
+    login.setBorder(null);
+
+    // register.setIcon(new
+    // javax.swing.ImageIcon(getClass().getResource("/proje/icon/register.png")));
+    // // NOI18N
+    register.setText("KAYIT OL");
+    register.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    register.setkBackGroundColor(new java.awt.Color(255, 153, 153));
+    register.setkBorderRadius(30);
+    register.setkEndColor(new java.awt.Color(204, 0, 51));
+    register.setkHoverEndColor(new java.awt.Color(51, 51, 51));
+    register.setkHoverForeGround(new java.awt.Color(102, 0, 102));
+    register.setkHoverStartColor(new java.awt.Color(204, 204, 204));
+    register.setkSelectedColor(new java.awt.Color(153, 255, 153));
+    register.addActionListener(this);
+    register.setBorder(null);
+
+    javax.swing.GroupLayout kGradientPanel2Layout = new javax.swing.GroupLayout(kGradientPanel2);
+    kGradientPanel2.setLayout(kGradientPanel2Layout);
+    kGradientPanel2Layout.setHorizontalGroup(kGradientPanel2Layout
+        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel2Layout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(register, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(41, 41, 41)
+            .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(kGradientPanel2Layout.createSequentialGroup().addGap(124, 124, 124)
+            .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52,
+                    javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2))
+            .addGap(18, 18, 18)
+            .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel2Layout.createSequentialGroup()
                     .addComponent(sifre_alani, javax.swing.GroupLayout.PREFERRED_SIZE, 215,
                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kimlik_alani, javax.swing.GroupLayout.PREFERRED_SIZE, 215,
-                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(204, 204, 204)));
-    jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel1Layout.createSequentialGroup().addGap(76, 76, 76)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(kimlik_alani, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
-                    javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                    .addGap(40, 40, 40).addComponent(sifre_goster2))
+                .addComponent(kimlik_alani, javax.swing.GroupLayout.PREFERRED_SIZE, 215,
                     javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(sifre_alani, javax.swing.GroupLayout.Alignment.TRAILING,
-                    javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING,
-                    javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(71, 71, 71)));
+            .addContainerGap(94, Short.MAX_VALUE)));
+    kGradientPanel2Layout
+        .setVerticalGroup(
+            kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel2Layout.createSequentialGroup().addGap(62, 62, 62)
+                    .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(kimlik_alani, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                            javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(
+                            jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                            javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(kGradientPanel2Layout.createSequentialGroup().addGap(30, 30, 30).addGroup(
+                            kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(sifre_goster2)
+                                .addComponent(sifre_alani, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                                    javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(kGradientPanel2Layout.createSequentialGroup().addGap(38, 38, 38).addComponent(jLabel1,
+                            javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                    .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(register, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
+                            javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                            Short.MAX_VALUE))
+                    .addGap(50, 50, 50)));
 
-    jPanel2.setBackground(new java.awt.Color(102, 102, 255));
-    jPanel2.setPreferredSize(new java.awt.Dimension(669, 275));
-
-    register.setBackground(new java.awt.Color(255, 102, 102));
-    register.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    register.setForeground(new java.awt.Color(51, 51, 255));
-    register.setIcon(new javax.swing.ImageIcon("C:\\Users\\excalibur\\Downloads\\register.png")); // NOI18N
-    register.setText("Kayit Ol");
-    register.addActionListener(this);
-
-    login.setBackground(new java.awt.Color(255, 102, 102));
-    login.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    login.setForeground(new java.awt.Color(51, 51, 255));
-    login.setIcon(new javax.swing.ImageIcon("C:\\Users\\excalibur\\Downloads\\user.png")); // NOI18N
-    login.setText("Giriş Yap");
-    login.addActionListener(this);
-
-    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-    jPanel2.setLayout(jPanel2Layout);
-    jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(register, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(37, 37, 37)
-            .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(120, 120, 120)));
-    jPanel2Layout
-        .setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup().addGap(104, 104, 104)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
-                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(register, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
-                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(121, Short.MAX_VALUE)));
+    javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
+    kGradientPanel1.setLayout(kGradientPanel1Layout);
+    kGradientPanel1Layout
+        .setHorizontalGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup().addGap(216, 216, 216).addComponent(jLabel3,
+                        javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup().addGap(106, 106, 106).addComponent(
+                        kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(128, Short.MAX_VALUE)));
+    kGradientPanel1Layout.setVerticalGroup(kGradientPanel1Layout
+        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(kGradientPanel1Layout.createSequentialGroup()
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(114, Short.MAX_VALUE)));
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE).addComponent(jPanel1,
-            javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-            javax.swing.GroupLayout.PREFERRED_SIZE));
-    layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE,
-                Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap()));
+    layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+        kGradientPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE,
+        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+    layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+        kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
     pack();
+  }
+
+  private void kimlik_alaniKeyPressed(java.awt.event.KeyEvent evt) {
+
+    if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
+
+      if (kimlik_alani.getText().length() < 11) {
+        kimlik_alani.setEditable(true);
+      } else {
+        kimlik_alani.setEditable(false);
+      }
+    } else {
+      if (evt.getExtendedKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode() == KeyEvent.VK_DELETE) {
+        kimlik_alani.setEditable(true);
+      } else {
+        kimlik_alani.setEditable(false);
+      }
+    }
+
+    // TODO add your handling code here:
+  }
+
+  private void sifre_goster2ActionPerformed(java.awt.event.ActionEvent evt) {
+
+    if (sifre_goster2.isSelected()) {
+      sifre_alani.setEchoChar((char) 0);
+    } else {
+      sifre_alani.setEchoChar('*');
+    }
+
   }
 
   @Override

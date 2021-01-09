@@ -9,6 +9,9 @@ public class App {
 
         // TODO:
         //
+        // -> register :
+        // --> tc cut of range hatası
+        //
         // -> ana sayfa :
         // --> tarihe göre sırala
         // --> iconlar
