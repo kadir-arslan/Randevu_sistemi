@@ -9,6 +9,10 @@ public class App {
 
         // TODO:
         //
+        // -> jdbc bağlantı hataları verdir
+        //
+        // -> admin sayfası
+        //
         // -> register :
         // --> tc cut of range hatası
         //
