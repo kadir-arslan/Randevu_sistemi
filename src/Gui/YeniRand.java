@@ -51,6 +51,7 @@ public class YeniRand extends JFrame implements ActionListener {
                 kButton1 = new keeptoo.KButton();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                setResizable(false);
 
                 kGradientPanel1.setkEndColor(new java.awt.Color(102, 102, 255));
                 kGradientPanel1.setkStartColor(new java.awt.Color(0, 153, 0));
@@ -88,7 +89,11 @@ public class YeniRand extends JFrame implements ActionListener {
                         if (e.getStateChange() == ItemEvent.SELECTED) {
                                 if (jComboBox1.getSelectedItem().toString().equals("defualt")) {
                                         dok.clear();
+                                        seans.clear();
                                         user.setSelectedPol(null);
+                                        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(pol));
+                                        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(dok));
+                                        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(seans));
                                 } else {
                                         user.setSelectedPol(jComboBox1.getSelectedItem().toString());
                                         dok = user.getDoktroList();

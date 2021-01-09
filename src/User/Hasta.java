@@ -16,13 +16,7 @@ public class Hasta implements User {
   protected String tc = null;
   protected String sifre = null;
   protected Jdbc db;
-
-  private String selectedpol_id = null;
-  private String selectedpol = null;
-  private String selecteddok_id = null;
-  private String selecteddok = null;
-  private String selectedtarih = null;
-  private String selectedseans = null;
+  Selected selected = new Selected();
 
   public Hasta(String tc, String sifre, Jdbc db) {
     this.tc = tc;
@@ -38,7 +32,7 @@ public class Hasta implements User {
   }
 
   public String getSelectedTarih() {
-    return this.selectedtarih;
+    return this.selected.tarih;
   }
 
   public String getTc() {
@@ -49,20 +43,23 @@ public class Hasta implements User {
     return this.isim;
   }
 
-  public void setSelectedDok(String selecteddok) {
-    this.selecteddok = selecteddok;
+  public void setSelectedDok(String dok) {
+    this.selected.dok = dok;
   }
 
-  public void setSelectedPol(String selectedpol) {
-    this.selectedpol = selectedpol;
+  public void setSelectedPol(String pol) {
+    if (pol == null) {
+      this.selected.clear();
+    }
+    this.selected.pol = pol;
   }
 
-  public void selectedseans(String selectedseans) {
-    this.selectedseans = selectedseans;
+  public void selectedseans(String seans) {
+    this.selected.seans = seans;
   }
 
-  public void setSelectedtarih(String selectedtarih) {
-    this.selectedtarih = selectedtarih;
+  public void setSelectedtarih(String tarih) {
+    this.selected.tarih = tarih;
   }
 
   public String getPolId(String polName) {
@@ -107,12 +104,12 @@ public class Hasta implements User {
     Vector<String> dok = new Vector<String>();
     try {
       ResultSet result = this.db
-          .executeQuery("select pol_id FROM hastane.poliklinik where pol_name = '" + this.selectedpol + "';");
+          .executeQuery("select pol_id FROM hastane.poliklinik where pol_name = '" + this.selected.pol + "';");
       if (result.next()) {
-        this.selectedpol_id = result.getString(1);
+        this.selected.polId = result.getString(1);
       }
       ResultSet result2 = this.db
-          .executeQuery("SELECT * FROM hastane.doktorlar WHERE dok_pol_id = '" + this.selectedpol_id + "';");
+          .executeQuery("SELECT * FROM hastane.doktorlar WHERE dok_pol_id = '" + this.selected.polId + "';");
       dok.clear();
       dok.add("defualt");
       while (result2.next()) {
@@ -128,20 +125,20 @@ public class Hasta implements User {
 
   public Vector<String> getseans() {
     Vector<String> seans = new Vector<String>();
-    if (selecteddok != null) {
+    if (this.selected.dok != null) {
       try {
         ResultSet result = this.db.executeQuery("select dok_id From hastane.doktorlar where dok_name = '"
-            + this.selecteddok + "' and dok_pol_id = '" + this.selectedpol_id + "'");
+            + this.selected.dok + "' and dok_pol_id = '" + this.selected.polId + "'");
         if (result.next()) {
-          this.selecteddok_id = result.getString(1);
+          this.selected.dokId = result.getString(1);
         }
-        result = this.db.executeQuery("select * from hastane.hafta where gun ='" + this.selectedtarih
-            + "' and h_dok_id = '" + this.selecteddok_id + "'");
+        result = this.db.executeQuery("select * from hastane.hafta where gun ='" + this.selected.tarih
+            + "' and h_dok_id = '" + this.selected.dokId + "'");
         if (!result.next()) {
-          this.db.executeUpdate("INSERT INTO hastane.hafta(h_dok_id,gun) values(" + this.selecteddok_id + ",'"
-              + this.selectedtarih + "');");
-          result = this.db.executeQuery("select * from hastane.hafta where gun ='" + this.selectedtarih
-              + "' and h_dok_id = '" + this.selecteddok_id + "'");
+          this.db.executeUpdate("INSERT INTO hastane.hafta(h_dok_id,gun) values(" + this.selected.dokId + ",'"
+              + this.selected.tarih + "');");
+          result = this.db.executeQuery("select * from hastane.hafta where gun ='" + this.selected.tarih
+              + "' and h_dok_id = '" + this.selected.dokId + "'");
           result.next();
         }
         ResultSetMetaData rsmd = result.getMetaData();
@@ -161,20 +158,15 @@ public class Hasta implements User {
 
   public void setRandevu() {
     try {
-      this.db.executeUpdate("UPDATE hastane.hafta SET " + this.selectedseans + " = " + this.tc + " Where h_dok_id = "
-          + this.selecteddok_id + " and gun = '" + this.selectedtarih + "';");
+      this.db.executeUpdate("UPDATE hastane.hafta SET " + this.selected.seans + " = " + this.tc + " Where h_dok_id = "
+          + this.selected.dokId + " and gun = '" + this.selected.tarih + "';");
       JOptionPane.showMessageDialog(null, "Randevu başarılı şekilde alındı.");
 
     } catch (Exception ex) {
-      JOptionPane.showMessageDialog(null, "Randevu alma işllemi gerçekleştirilemedi.");
+      JOptionPane.showMessageDialog(null, "Randevu alma işlemi gerçekleştirilemedi.");
     }
 
-    this.selectedpol_id = null;
-    this.selectedpol = null;
-    this.selecteddok_id = null;
-    this.selecteddok = null;
-    this.selectedtarih = null;
-    this.selectedseans = null;
+    this.selected.clear();
 
   }
 
@@ -228,23 +220,20 @@ public class Hasta implements User {
 
   public void randevuSil(String tarih, String saat, String pol, String dok) {
 
-    this.selectedpol = pol;
-    this.selecteddok = dok;
+    this.selected.pol = pol;
+    this.selected.dok = dok;
 
-    this.selectedpol_id = getPolId(selectedpol);
-    this.selecteddok_id = getDokId(this.selecteddok, this.selectedpol_id);
+    this.selected.polId = getPolId(this.selected.pol);
+    this.selected.dokId = getDokId(this.selected.dok, this.selected.polId);
 
     try {
-      this.db.executeUpdate("UPDATE hastane.hafta SET " + saat + " = null Where h_dok_id = " + this.selecteddok_id
+      this.db.executeUpdate("UPDATE hastane.hafta SET " + saat + " = null Where h_dok_id = " + this.selected.dokId
           + " and gun = '" + tarih + "';");
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    this.selectedpol_id = null;
-    this.selectedpol = null;
-    this.selecteddok_id = null;
-    this.selecteddok = null;
+    this.selected.clear();
   }
 
 }

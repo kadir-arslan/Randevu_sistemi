@@ -52,6 +52,7 @@ public class AnaSayfa extends JFrame {
                 kButton1 = new keeptoo.KButton();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                setResizable(false);
 
                 kGradientPanel1.setkEndColor(new java.awt.Color(255, 102, 153));
                 kGradientPanel1.setkStartColor(new java.awt.Color(153, 0, 153));
@@ -137,6 +138,7 @@ public class AnaSayfa extends JFrame {
                                         }
                                 });
                 hasta_tablosu.setRowHeight(25);
+                hasta_tablosu.setBorder(null);
                 jScrollPane1.setViewportView(hasta_tablosu);
                 if (hasta_tablosu.getColumnModel().getColumnCount() > 0) {
                         hasta_tablosu.getColumnModel().getColumn(0).setResizable(false);
