@@ -104,9 +104,8 @@ public class Register extends JFrame implements ActionListener {
                                 new java.awt.Color(153, 153, 255)));
 
                 register.setForeground(new java.awt.Color(0, 0, 0));
-                // register.setIcon(new
-                // javax.swing.ImageIcon(getClass().getResource("/proje/icon/register.png")));
-                // // NOI18N
+                register.setIcon(new javax.swing.ImageIcon("Icons/register.png"));
+                // NOI18N
                 register.setText(" KAYIT OL");
                 register.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 register.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

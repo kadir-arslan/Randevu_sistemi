@@ -61,9 +61,7 @@ public class AnaSayfa extends JFrame {
                 silme_butonu.setBackground(new java.awt.Color(204, 204, 255));
                 silme_butonu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 silme_butonu.setForeground(new java.awt.Color(102, 0, 102));
-                // silme_butonu.setIcon(new
-                // javax.swing.ImageIcon(getClass().getResource("/proje/icon/remove.png"))); //
-                // NOI18N
+                silme_butonu.setIcon(new javax.swing.ImageIcon("Icons/remove.png")); // NOI18N
                 silme_butonu.setText(" Sil");
                 silme_butonu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 silme_butonu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -93,9 +91,7 @@ public class AnaSayfa extends JFrame {
                 güncelle_butonu.setBackground(new java.awt.Color(204, 204, 255));
                 güncelle_butonu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 güncelle_butonu.setForeground(new java.awt.Color(102, 0, 102));
-                // güncelle_butonu.setIcon(new
-                // javax.swing.ImageIcon(getClass().getResource("/proje/icon/arrows.png"))); //
-                // NOI18N
+                güncelle_butonu.setIcon(new javax.swing.ImageIcon("Icons/arrows.png")); // NOI18N
                 güncelle_butonu.setText("Güncelle");
                 güncelle_butonu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                 güncelle_butonu.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -139,6 +135,7 @@ public class AnaSayfa extends JFrame {
                                 });
                 hasta_tablosu.setRowHeight(25);
                 hasta_tablosu.setBorder(null);
+                hasta_tablosu.setAutoCreateRowSorter(true);
                 jScrollPane1.setViewportView(hasta_tablosu);
                 if (hasta_tablosu.getColumnModel().getColumnCount() > 0) {
                         hasta_tablosu.getColumnModel().getColumn(0).setResizable(false);
@@ -146,9 +143,7 @@ public class AnaSayfa extends JFrame {
                         hasta_tablosu.getColumnModel().getColumn(2).setResizable(false);
                         hasta_tablosu.getColumnModel().getColumn(3).setResizable(false);
                 }
-                // kButton1.setIcon(new
-                // javax.swing.ImageIcon(getClass().getResource("/proje/icon/plus_1.png"))); //
-                // NOI18N
+                kButton1.setIcon(new javax.swing.ImageIcon("Icons/plus_1.png")); // NOI18N
                 kButton1.setText(" YENİ RANDEVU OLUŞTUR");
                 kButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 kButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -159,6 +154,7 @@ public class AnaSayfa extends JFrame {
                 kButton1.setkHoverForeGround(new java.awt.Color(102, 0, 51));
                 kButton1.setkHoverStartColor(new java.awt.Color(204, 255, 204));
                 kButton1.setkPressedColor(new java.awt.Color(255, 0, 51));
+                kButton1.setBorder(null);
                 kButton1.addActionListener(e -> {
                         new YeniRand(this.user);
                 });

@@ -92,9 +92,7 @@ public class Login extends JFrame implements ActionListener {
       }
     });
 
-    // login.setIcon(new
-    // javax.swing.ImageIcon(getClass().getResource("/proje/icon/user.png"))); //
-    // NOI18N
+    login.setIcon(new javax.swing.ImageIcon("Icons/user.png")); // NOI18N
     login.setText("GİRİŞ YAP");
     login.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     login.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -108,9 +106,8 @@ public class Login extends JFrame implements ActionListener {
     login.addActionListener(this);
     login.setBorder(null);
 
-    // register.setIcon(new
-    // javax.swing.ImageIcon(getClass().getResource("/proje/icon/register.png")));
-    // // NOI18N
+    register.setIcon(new javax.swing.ImageIcon("Icons/register.png"));
+    // NOI18N
     register.setText("KAYIT OL");
     register.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     register.setkBackGroundColor(new java.awt.Color(255, 153, 153));

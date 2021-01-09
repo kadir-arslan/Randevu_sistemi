@@ -132,9 +132,8 @@ public class YeniRand extends JFrame implements ActionListener {
                         }
                 });
 
-                // kButton1.setIcon(new
-                // javax.swing.ImageIcon(getClass().getResource("/proje/icon/calendar.png")));
-                // // NOI18N
+                kButton1.setIcon(new javax.swing.ImageIcon("Icons/calendar.png"));
+                // NOI18N
                 kButton1.setText("RANDEVUYU OLUŞTUR");
                 kButton1.setkEndColor(new java.awt.Color(102, 255, 255));
                 kButton1.setkHoverEndColor(new java.awt.Color(204, 204, 204));
