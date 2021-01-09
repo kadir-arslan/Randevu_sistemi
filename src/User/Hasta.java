@@ -146,7 +146,8 @@ public class Hasta implements User {
         seans.add("default");
         for (int i = 3; i <= 16; i++) {
           if (result.getString(i) == null)
-            seans.add(rsmd.getColumnName(i));
+            seans.add(rsmd.getColumnName(i).toString().substring(1, 3) + "."
+                + rsmd.getColumnName(i).toString().substring(4, 6));
         }
 
       } catch (SQLException ex) {
@@ -174,11 +175,11 @@ public class Hasta implements User {
     ArrayList<String[]> ret = new ArrayList<String[]>();
 
     try {
-      ResultSet result = this.db
-          .executeQuery("select * from hastane.hafta where s9 = " + this.tc + "  or s9_30 = " + this.tc + " or s10 = "
-              + this.tc + " or s10_30 = " + this.tc + " or s11 = " + this.tc + " or s11_30 = " + this.tc + " or s13 = "
-              + this.tc + " or s13_30 = " + this.tc + " or s14 = " + this.tc + " or s14_30 = " + this.tc + "  or s15 = "
-              + this.tc + " or s15_30 = " + this.tc + " or s16 = " + this.tc + " or s16_30 = " + this.tc + ";");
+      ResultSet result = this.db.executeQuery("select * from hastane.hafta where s09_00 = " + this.tc + "  or s09_30 = "
+          + this.tc + " or s10_00 = " + this.tc + " or s10_30 = " + this.tc + " or s11_00 = " + this.tc
+          + " or s11_30 = " + this.tc + " or s13_00 = " + this.tc + " or s13_30 = " + this.tc + " or s14_00 = "
+          + this.tc + " or s14_30 = " + this.tc + "  or s15_00= " + this.tc + " or s15_30 = " + this.tc
+          + " or s16_00 = " + this.tc + " or s16_30 = " + this.tc + ";");
       ResultSetMetaData rsmd = result.getMetaData();
       while (result.next()) {
         String[] row = new String[4];
@@ -186,7 +187,8 @@ public class Hasta implements User {
         for (int i = 3; i <= 16; i++) {
           if (result.getString(i) != null) {
             if (result.getString(i).equals(this.tc)) {
-              row[1] = rsmd.getColumnName(i);
+              row[1] = rsmd.getColumnName(i).toString().substring(1, 3) + "."
+                  + rsmd.getColumnName(i).toString().substring(4, 6);
               break;
             }
           }

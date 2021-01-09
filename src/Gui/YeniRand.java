@@ -128,7 +128,8 @@ public class YeniRand extends JFrame implements ActionListener {
                 jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jComboBox3.addItemListener(e -> {
                         if (e.getStateChange() == ItemEvent.SELECTED) {
-                                user.selectedseans(jComboBox3.getSelectedItem().toString());
+                                user.selectedseans("s" + jComboBox3.getSelectedItem().toString().substring(0, 2) + "_"
+                                                + jComboBox3.getSelectedItem().toString().substring(3, 5));
                         }
                 });
 

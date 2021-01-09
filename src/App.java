@@ -12,9 +12,6 @@ public class App {
         // -> register :
         // --> tc cut of range hatası
         //
-        // -> ana sayfa :
-        // --> tarihe göre sırala
-        //
         // -> yeni randevu :
         // --> bir kişi aynı gün aynı poliklinikten sadece bir randevu alabir yap
         //
