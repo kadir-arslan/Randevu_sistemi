@@ -12,6 +12,7 @@ import Connection.Jdbc;
 
 public class Hasta implements User {
 
+  // TODO : private ?
   protected String isim = null;
   protected String tc = null;
   protected String sifre = null;
@@ -31,22 +32,27 @@ public class Hasta implements User {
     }
   }
 
+  @Override
   public String getSelectedTarih() {
     return this.selected.tarih;
   }
 
+  @Override
   public String getTc() {
     return this.tc;
   }
 
+  @Override
   public String getName() {
     return this.isim;
   }
 
+  @Override
   public void setSelectedDok(String dok) {
     this.selected.dok = dok;
   }
 
+  @Override
   public void setSelectedPol(String pol) {
     if (pol == null) {
       this.selected.clear();
@@ -54,14 +60,17 @@ public class Hasta implements User {
     this.selected.pol = pol;
   }
 
+  @Override
   public void selectedseans(String seans) {
     this.selected.seans = seans;
   }
 
+  @Override
   public void setSelectedtarih(String tarih) {
     this.selected.tarih = tarih;
   }
 
+  @Override
   public String getPolId(String polName) {
     try {
       ResultSet res = this.db.executeQuery("select pol_id FROM hastane.poliklinik where pol_name = '" + polName + "';");
@@ -73,6 +82,7 @@ public class Hasta implements User {
     }
   }
 
+  @Override
   public String getDokId(String dokName, String PolId) {
     try {
       ResultSet res = this.db.executeQuery("select dok_id FROM hastane.doktorlar where dok_name = '" + dokName
@@ -85,6 +95,7 @@ public class Hasta implements User {
     }
   }
 
+  @Override
   public Vector<String> getPoliklinikList() {
     Vector<String> pol = new Vector<String>();
 
@@ -100,6 +111,7 @@ public class Hasta implements User {
     return pol;
   }
 
+  @Override
   public Vector<String> getDoktroList() {
     Vector<String> dok = new Vector<String>();
     try {
@@ -123,6 +135,7 @@ public class Hasta implements User {
 
   }
 
+  @Override
   public Vector<String> getseans() {
     Vector<String> seans = new Vector<String>();
     if (this.selected.dok != null) {
@@ -157,6 +170,7 @@ public class Hasta implements User {
     return seans;
   }
 
+  @Override
   public void setRandevu() {
     try {
       this.db.executeUpdate("UPDATE hastane.hafta SET " + this.selected.seans + " = " + this.tc + " Where h_dok_id = "
@@ -171,6 +185,7 @@ public class Hasta implements User {
 
   }
 
+  @Override
   public ArrayList<String[]> getRandList() {
     ArrayList<String[]> ret = new ArrayList<String[]>();
 
@@ -220,6 +235,7 @@ public class Hasta implements User {
     }
   }
 
+  @Override
   public void randevuSil(String tarih, String saat, String pol, String dok) {
 
     this.selected.pol = pol;
@@ -236,6 +252,16 @@ public class Hasta implements User {
     }
 
     this.selected.clear();
+  }
+
+  @Override
+  public Jdbc getDb() {
+    return this.db;
+  }
+
+  @Override
+  public String getSifre() {
+    return this.sifre;
   }
 
 }

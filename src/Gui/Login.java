@@ -65,7 +65,6 @@ public class Login extends JFrame implements ActionListener {
 
     kimlik_alani.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     kimlik_alani.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(153, 0, 153)));
-    // kimlik_alani.addActionListener(this);
     kimlik_alani.addKeyListener(new java.awt.event.KeyAdapter() {
       public void keyPressed(java.awt.event.KeyEvent evt) {
         kimlik_alaniKeyPressed(evt);
@@ -76,11 +75,6 @@ public class Login extends JFrame implements ActionListener {
     jLabel1.setText("Şifre :");
 
     sifre_alani.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(153, 0, 153)));
-    // sifre_alani.addActionListener(new java.awt.event.ActionListener() {
-    // public void actionPerformed(java.awt.event.ActionEvent evt) {
-    // sifre_alaniActionPerformed(evt);
-    // }
-    // });
 
     sifre_goster2.setBackground(new java.awt.Color(255, 255, 255));
     sifre_goster2.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
@@ -218,8 +212,6 @@ public class Login extends JFrame implements ActionListener {
         kimlik_alani.setEditable(false);
       }
     }
-
-    // TODO add your handling code here:
   }
 
   private void sifre_goster2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,6 +238,9 @@ public class Login extends JFrame implements ActionListener {
           if (result.getString(3).equals(this.sifre)) {
             user = new Hasta(this.tcKimlikNo, this.sifre, this.db);
             new AnaSayfa(this.user);
+            if (this.tcKimlikNo.equals("11111111111")) {
+              new AdminSayfası(this.user);
+            }
             this.dispose();
 
           } else {
