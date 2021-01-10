@@ -49,13 +49,11 @@ public class AdminSayfası extends JFrame {
                 jTabbedPane1 = new javax.swing.JTabbedPane();
                 kGradientPanel1 = new keeptoo.KGradientPanel();
                 poliklinik_sil = new keeptoo.KButton();
-                poliklinik_guncelle = new keeptoo.KButton();
                 poliklinik_ekle = new keeptoo.KButton();
                 jScrollPane2 = new javax.swing.JScrollPane();
                 jTable2 = new javax.swing.JTable();
                 kGradientPanel2 = new keeptoo.KGradientPanel();
                 doktor_sil = new keeptoo.KButton();
-                doktor_guncelle = new keeptoo.KButton();
                 doktor_ekle = new keeptoo.KButton();
                 jScrollPane3 = new javax.swing.JScrollPane();
                 jTable3 = new javax.swing.JTable();
@@ -63,9 +61,8 @@ public class AdminSayfası extends JFrame {
                 jScrollPane1 = new javax.swing.JScrollPane();
                 jTable1 = new javax.swing.JTable();
 
-                setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-                setLocation(100, 100);
-                setResizable(false);
+                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
                 kGradientPanel1.setkEndColor(new java.awt.Color(255, 255, 255));
                 kGradientPanel1.setkStartColor(new java.awt.Color(255, 255, 204));
 
@@ -91,24 +88,6 @@ public class AdminSayfası extends JFrame {
                                 polModel.addRow(x);
                         }
                 });
-
-                poliklinik_guncelle.setText("GÜNCELLE");
-                poliklinik_guncelle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-                poliklinik_guncelle.setkBorderRadius(55);
-                poliklinik_guncelle.setkEndColor(new java.awt.Color(204, 0, 153));
-                poliklinik_guncelle.setkHoverEndColor(new java.awt.Color(204, 204, 204));
-                poliklinik_guncelle.setkHoverForeGround(new java.awt.Color(0, 0, 0));
-                poliklinik_guncelle.setBorder(null);
-                poliklinik_guncelle.setkHoverStartColor(new java.awt.Color(204, 51, 0));
-                poliklinik_guncelle.addActionListener(e -> {
-                        polModel.setRowCount(0);
-                        ArrayList<String[]> polList;
-                        polList = admin.getPolList();
-                        for (String[] x : polList) {
-                                polModel.addRow(x);
-                        }
-                });
-
                 poliklinik_ekle.setText("EKLE");
                 poliklinik_ekle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 poliklinik_ekle.setkBorderRadius(55);
@@ -128,7 +107,6 @@ public class AdminSayfası extends JFrame {
                                 polModel.addRow(x);
                         }
                 });
-
                 jTable2.setAutoCreateRowSorter(true);
                 jTable2.setModel(new javax.swing.table.DefaultTableModel(new Object[][] { { null, null } },
                                 new String[] { "Poliklinik ID", "Poliklinik Adı" }) {
@@ -149,29 +127,25 @@ public class AdminSayfası extends JFrame {
                 kGradientPanel1.setLayout(kGradientPanel1Layout);
                 kGradientPanel1Layout.setHorizontalGroup(kGradientPanel1Layout
                                 .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(kGradientPanel1Layout.createSequentialGroup().addGap(35, 35, 35)
-                                                .addGroup(kGradientPanel1Layout.createParallelGroup(
-                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addGroup(kGradientPanel1Layout.createSequentialGroup().addGroup(kGradientPanel1Layout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                                                .addGap(35, 35, 35).addComponent(jScrollPane2,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                748,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                kGradientPanel1Layout.createSequentialGroup()
+                                                                                .addGap(148, 148, 148)
                                                                                 .addComponent(poliklinik_sil,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(80, 80, 80)
-                                                                                .addComponent(poliklinik_guncelle,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(78, 78, 78)
+                                                                                .addGap(107, 107, 107)
                                                                                 .addComponent(poliklinik_ekle,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(8, 8, 8))
-                                                                .addComponent(jScrollPane2,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                748,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                 .addContainerGap(62, Short.MAX_VALUE)));
                 kGradientPanel1Layout.setVerticalGroup(kGradientPanel1Layout
                                 .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,8 +153,7 @@ public class AdminSayfası extends JFrame {
                                                 .createSequentialGroup().addGap(29, 29, 29)
                                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 330,
                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79,
-                                                                Short.MAX_VALUE)
+                                                .addGap(65, 65, 65)
                                                 .addGroup(kGradientPanel1Layout.createParallelGroup(
                                                                 javax.swing.GroupLayout.Alignment.BASELINE)
                                                                 .addComponent(poliklinik_sil,
@@ -190,12 +163,8 @@ public class AdminSayfası extends JFrame {
                                                                 .addComponent(poliklinik_ekle,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(poliklinik_guncelle,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(64, 64, 64)));
+                                                .addContainerGap(78, Short.MAX_VALUE)));
 
                 jTabbedPane1.addTab("Poliklinik ", kGradientPanel1);
 
@@ -224,24 +193,6 @@ public class AdminSayfası extends JFrame {
                                 dokModel.addRow(x);
                         }
                 });
-
-                doktor_guncelle.setText("GÜNCELLE");
-                doktor_guncelle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-                doktor_guncelle.setkBorderRadius(55);
-                doktor_guncelle.setkEndColor(new java.awt.Color(204, 0, 153));
-                doktor_guncelle.setkHoverEndColor(new java.awt.Color(204, 204, 204));
-                doktor_guncelle.setkHoverForeGround(new java.awt.Color(0, 0, 0));
-                doktor_guncelle.setkHoverStartColor(new java.awt.Color(204, 51, 0));
-                doktor_guncelle.setBorder(null);
-                doktor_guncelle.addActionListener(e -> {
-                        dokModel.setRowCount(0);
-                        ArrayList<String[]> dokList;
-                        dokList = admin.getDokList();
-                        for (String[] x : dokList) {
-                                dokModel.addRow(x);
-                        }
-                });
-
                 doktor_ekle.setText("DOKTOR EKLE");
                 doktor_ekle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 doktor_ekle.setkBorderRadius(55);
@@ -265,7 +216,6 @@ public class AdminSayfası extends JFrame {
                                 dokModel.addRow(x);
                         }
                 });
-
                 jTable3.setAutoCreateRowSorter(true);
                 jTable3.setModel(new javax.swing.table.DefaultTableModel(new Object[][] { { null, null, null } },
                                 new String[] { "Doktor ID", "Doktor Adı", "Poliklinik " }) {
@@ -292,15 +242,11 @@ public class AdminSayfası extends JFrame {
                                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 759,
                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(35, 35, 35))
-                                .addGroup(kGradientPanel2Layout.createSequentialGroup().addGap(71, 71, 71)
+                                .addGroup(kGradientPanel2Layout.createSequentialGroup().addGap(166, 166, 166)
                                                 .addComponent(doktor_sil, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(58, 58, 58)
-                                                .addComponent(doktor_guncelle, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(57, 57, 57)
+                                                .addGap(83, 83, 83)
                                                 .addComponent(doktor_ekle, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -321,10 +267,6 @@ public class AdminSayfası extends JFrame {
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(doktor_guncelle,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addComponent(doktor_ekle,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -338,9 +280,9 @@ public class AdminSayfası extends JFrame {
 
                 jTable1.setAutoCreateRowSorter(true);
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                                new Object[][] { { null, null, null, null, null, null } },
-                                new String[] { "Hasta Adı Soyadı", "Hasta TC Kimlik No", "Tarih", "Saat", "Poliklinik",
-                                                "Doktor" }) {
+                                new Object[][] { { null, null, null, null, null }, { null, null, null, null, null },
+                                                { null, null, null, null, null }, { null, null, null, null, null } },
+                                new String[] { "TC Kimlik No:", "Tarih", "Saat", "Poliklinik", "Doktor" }) {
                         boolean[] canEdit = new boolean[] { false, false, false, false, false };
 
                         public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -355,7 +297,6 @@ public class AdminSayfası extends JFrame {
                         jTable1.getColumnModel().getColumn(2).setResizable(false);
                         jTable1.getColumnModel().getColumn(3).setResizable(false);
                         jTable1.getColumnModel().getColumn(4).setResizable(false);
-                        jTable1.getColumnModel().getColumn(5).setResizable(false);
                 }
 
                 javax.swing.GroupLayout kGradientPanel3Layout = new javax.swing.GroupLayout(kGradientPanel3);
