@@ -15,12 +15,8 @@ public class Jdbc {
   private Connection con = null;
   private Statement statement = null;
 
-  public Jdbc() {
-    try {
-      this.connect();
-    } catch (SQLException e) {
-      JOptionPane.showMessageDialog(null, "Connection Error !");
-    }
+  public Jdbc() throws SQLException {
+    this.connect();
   }
 
   public void connect() throws SQLException {

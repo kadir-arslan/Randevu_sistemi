@@ -1,9 +1,7 @@
 package Gui;
 
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,7 +13,6 @@ public class AdminSayfası extends JFrame {
         private Admin admin;
 
         private keeptoo.KButton doktor_ekle;
-        private keeptoo.KButton doktor_guncelle;
         private keeptoo.KButton doktor_sil;
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JScrollPane jScrollPane2;
@@ -28,7 +25,6 @@ public class AdminSayfası extends JFrame {
         private keeptoo.KGradientPanel kGradientPanel2;
         private keeptoo.KGradientPanel kGradientPanel3;
         private keeptoo.KButton poliklinik_ekle;
-        private keeptoo.KButton poliklinik_guncelle;
         private keeptoo.KButton poliklinik_sil;
         private DefaultTableModel polModel;
         private DefaultTableModel dokModel;

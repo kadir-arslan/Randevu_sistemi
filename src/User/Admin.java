@@ -1,6 +1,5 @@
 package User;
 
-import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 import java.sql.ResultSet;

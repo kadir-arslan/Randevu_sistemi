@@ -4,7 +4,6 @@ import User.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.event.*;
 import java.util.ArrayList;
 
 public class AnaSayfa extends JFrame {

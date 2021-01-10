@@ -277,8 +277,6 @@ public class Register extends JFrame implements ActionListener {
                                 kimlik_alani.setEditable(false);
                         }
                 }
-
-                // TODO add your handling code here:
         }
 
         private void sifre_gosterActionPerformed(java.awt.event.ActionEvent evt) {

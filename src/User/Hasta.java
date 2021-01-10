@@ -12,12 +12,11 @@ import Connection.Jdbc;
 
 public class Hasta implements User {
 
-  // TODO : private ?
   protected String isim = null;
   protected String tc = null;
   protected String sifre = null;
   protected Jdbc db;
-  Selected selected = new Selected();
+  protected Selected selected = new Selected();
 
   public Hasta(String tc, String sifre, Jdbc db) {
     this.tc = tc;
