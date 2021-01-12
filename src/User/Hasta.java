@@ -172,15 +172,27 @@ public class Hasta implements User {
   @Override
   public void setRandevu() {
     try {
+      ResultSet result = this.db.executeQuery("select * from hastane.hafta where h_dok_id =" + this.selected.dokId
+          + " and gun = '" + this.selected.tarih + "';");
+      if (result.next()) {
+        for (int i = 3; i < 16; i++) {
+          if (result.getString(i) != null) {
+            if (result.getString(i).equals(this.tc)) {
+              JOptionPane.showMessageDialog(null, "Aynı gün içerisinde birden fazla randevu alınamaz .");
+              this.selected.clear();
+            }
+          }
+        }
+      }
+
       this.db.executeUpdate("UPDATE hastane.hafta SET " + this.selected.seans + " = " + this.tc + " Where h_dok_id = "
           + this.selected.dokId + " and gun = '" + this.selected.tarih + "';");
       JOptionPane.showMessageDialog(null, "Randevu başarılı şekilde alındı.");
 
     } catch (Exception ex) {
       JOptionPane.showMessageDialog(null, "Randevu alma işlemi gerçekleştirilemedi.");
+      this.selected.clear();
     }
-
-    this.selected.clear();
 
   }
 
@@ -235,7 +247,7 @@ public class Hasta implements User {
   }
 
   @Override
-  public void randevuSil(String tarih, String saat, String pol, String dok) {
+  public void deleteRandevu(String tarih, String saat, String pol, String dok) {
 
     this.selected.pol = pol;
     this.selected.dok = dok;
@@ -244,8 +256,8 @@ public class Hasta implements User {
     this.selected.dokId = getDokId(this.selected.dok, this.selected.polId);
 
     try {
-      this.db.executeUpdate("UPDATE hastane.hafta SET " + saat + " = null Where h_dok_id = " + this.selected.dokId
-          + " and gun = '" + tarih + "';");
+      this.db.executeUpdate("UPDATE hastane.hafta SET " + "s" + saat.substring(0, 2) + "_" + saat.substring(3, 5)
+          + " = null Where h_dok_id = " + this.selected.dokId + " and gun = '" + tarih + "';");
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -57,7 +57,9 @@ public class AdminSayfası extends JFrame {
                 jScrollPane1 = new javax.swing.JScrollPane();
                 jTable1 = new javax.swing.JTable();
 
-                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                setResizable(false);
+                setLocation(100, 100);
 
                 kGradientPanel1.setkEndColor(new java.awt.Color(255, 255, 255));
                 kGradientPanel1.setkStartColor(new java.awt.Color(255, 255, 204));

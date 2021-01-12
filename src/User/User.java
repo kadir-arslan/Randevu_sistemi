@@ -34,7 +34,7 @@ public interface User {
 
   public ArrayList<String[]> getRandList();
 
-  public void randevuSil(String tarih, String saat, String pol, String dok);
+  public void deleteRandevu(String tarih, String saat, String pol, String dok);
 
   public String getSifre();
 

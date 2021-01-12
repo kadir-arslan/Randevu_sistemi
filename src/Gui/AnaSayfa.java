@@ -74,7 +74,7 @@ public class AnaSayfa extends JFrame {
                         if (selectedRow == -1) {
 
                         } else {
-                                user.randevuSil(model.getValueAt(selectedRow, 0).toString(),
+                                user.deleteRandevu(model.getValueAt(selectedRow, 0).toString(),
                                                 model.getValueAt(selectedRow, 1).toString(),
                                                 model.getValueAt(selectedRow, 2).toString(),
                                                 model.getValueAt(selectedRow, 3).toString());
