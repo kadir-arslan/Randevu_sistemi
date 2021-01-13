@@ -15,15 +15,13 @@ public class Hasta implements User {
   protected String isim = null;
   protected String tc = null;
   protected String sifre = null;
-  protected Jdbc db;
   protected Selected selected = new Selected();
 
-  public Hasta(String tc, String sifre, Jdbc db) {
+  public Hasta(String tc, String sifre) {
     this.tc = tc;
     this.sifre = sifre;
-    this.db = db;
     try {
-      ResultSet result = db.executeQuery("select isim from  hastane.hastalar where tc = " + tc + " ;");
+      ResultSet result = Jdbc.executeQuery("select isim from  hastane.hastalar where tc = " + tc + " ;");
       result.next();
       this.isim = result.getString(1).toString();
     } catch (Exception e) {
@@ -72,7 +70,7 @@ public class Hasta implements User {
   @Override
   public String getPolId(String polName) {
     try {
-      ResultSet res = this.db.executeQuery("select pol_id FROM hastane.poliklinik where pol_name = '" + polName + "';");
+      ResultSet res = Jdbc.executeQuery("select pol_id FROM hastane.poliklinik where pol_name = '" + polName + "';");
       res.next();
       return res.getString(1);
     } catch (Exception e) {
@@ -84,7 +82,7 @@ public class Hasta implements User {
   @Override
   public String getDokId(String dokName, String PolId) {
     try {
-      ResultSet res = this.db.executeQuery("select dok_id FROM hastane.doktorlar where dok_name = '" + dokName
+      ResultSet res = Jdbc.executeQuery("select dok_id FROM hastane.doktorlar where dok_name = '" + dokName
           + "' AND  dok_pol_id = '" + PolId + "' ;");
       res.next();
       return res.getString(1);
@@ -99,7 +97,7 @@ public class Hasta implements User {
     Vector<String> pol = new Vector<String>();
 
     try {
-      ResultSet result = this.db.executeQuery("SELECT * FROM hastane.poliklinik;");
+      ResultSet result = Jdbc.executeQuery("SELECT * FROM hastane.poliklinik;");
       pol.add("defualt");
       while (result.next()) {
         pol.add(result.getString(2));
@@ -114,12 +112,12 @@ public class Hasta implements User {
   public Vector<String> getDoktroList() {
     Vector<String> dok = new Vector<String>();
     try {
-      ResultSet result = this.db
+      ResultSet result = Jdbc
           .executeQuery("select pol_id FROM hastane.poliklinik where pol_name = '" + this.selected.pol + "';");
       if (result.next()) {
         this.selected.polId = result.getString(1);
       }
-      ResultSet result2 = this.db
+      ResultSet result2 = Jdbc
           .executeQuery("SELECT * FROM hastane.doktorlar WHERE dok_pol_id = '" + this.selected.polId + "';");
       dok.clear();
       dok.add("defualt");
@@ -139,17 +137,17 @@ public class Hasta implements User {
     Vector<String> seans = new Vector<String>();
     if (this.selected.dok != null) {
       try {
-        ResultSet result = this.db.executeQuery("select dok_id From hastane.doktorlar where dok_name = '"
+        ResultSet result = Jdbc.executeQuery("select dok_id From hastane.doktorlar where dok_name = '"
             + this.selected.dok + "' and dok_pol_id = '" + this.selected.polId + "'");
         if (result.next()) {
           this.selected.dokId = result.getString(1);
         }
-        result = this.db.executeQuery("select * from hastane.hafta where gun ='" + this.selected.tarih
+        result = Jdbc.executeQuery("select * from hastane.hafta where gun ='" + this.selected.tarih
             + "' and h_dok_id = '" + this.selected.dokId + "'");
         if (!result.next()) {
-          this.db.executeUpdate("INSERT INTO hastane.hafta(h_dok_id,gun) values(" + this.selected.dokId + ",'"
+          Jdbc.executeUpdate("INSERT INTO hastane.hafta(h_dok_id,gun) values(" + this.selected.dokId + ",'"
               + this.selected.tarih + "');");
-          result = this.db.executeQuery("select * from hastane.hafta where gun ='" + this.selected.tarih
+          result = Jdbc.executeQuery("select * from hastane.hafta where gun ='" + this.selected.tarih
               + "' and h_dok_id = '" + this.selected.dokId + "'");
           result.next();
         }
@@ -172,7 +170,7 @@ public class Hasta implements User {
   @Override
   public void setRandevu() {
     try {
-      ResultSet result = this.db.executeQuery("select * from hastane.hafta where h_dok_id =" + this.selected.dokId
+      ResultSet result = Jdbc.executeQuery("select * from hastane.hafta where h_dok_id =" + this.selected.dokId
           + " and gun = '" + this.selected.tarih + "';");
       if (result.next()) {
         for (int i = 3; i < 16; i++) {
@@ -185,7 +183,7 @@ public class Hasta implements User {
         }
       }
 
-      this.db.executeUpdate("UPDATE hastane.hafta SET " + this.selected.seans + " = " + this.tc + " Where h_dok_id = "
+      Jdbc.executeUpdate("UPDATE hastane.hafta SET " + this.selected.seans + " = " + this.tc + " Where h_dok_id = "
           + this.selected.dokId + " and gun = '" + this.selected.tarih + "';");
       JOptionPane.showMessageDialog(null, "Randevu başarılı şekilde alındı.");
 
@@ -201,7 +199,7 @@ public class Hasta implements User {
     ArrayList<String[]> ret = new ArrayList<String[]>();
 
     try {
-      ResultSet result = this.db.executeQuery("select * from hastane.hafta where s09_00 = " + this.tc + "  or s09_30 = "
+      ResultSet result = Jdbc.executeQuery("select * from hastane.hafta where s09_00 = " + this.tc + "  or s09_30 = "
           + this.tc + " or s10_00 = " + this.tc + " or s10_30 = " + this.tc + " or s11_00 = " + this.tc
           + " or s11_30 = " + this.tc + " or s13_00 = " + this.tc + " or s13_30 = " + this.tc + " or s14_00 = "
           + this.tc + " or s14_30 = " + this.tc + "  or s15_00= " + this.tc + " or s15_30 = " + this.tc
@@ -225,7 +223,7 @@ public class Hasta implements User {
       }
 
       for (String[] strings : ret) {
-        result = this.db.executeQuery(
+        result = Jdbc.executeQuery(
             "SELECT pol_name FROM hastane.poliklinik WHERE pol_id in(SELECT dok_pol_id FROM hastane.doktorlar WHERE dok_id = '"
                 + strings[2] + "' );");
         result.next();
@@ -233,7 +231,7 @@ public class Hasta implements User {
 
       }
       for (String[] strings : ret) {
-        result = this.db.executeQuery("SELECT dok_name FROM hastane.doktorlar WHERE dok_id = '" + strings[3] + "';");
+        result = Jdbc.executeQuery("SELECT dok_name FROM hastane.doktorlar WHERE dok_id = '" + strings[3] + "';");
         result.next();
         strings[3] = result.getString(1);// dok_id değerinden dok_name değerine
 
@@ -256,18 +254,13 @@ public class Hasta implements User {
     this.selected.dokId = getDokId(this.selected.dok, this.selected.polId);
 
     try {
-      this.db.executeUpdate("UPDATE hastane.hafta SET " + "s" + saat.substring(0, 2) + "_" + saat.substring(3, 5)
+      Jdbc.executeUpdate("UPDATE hastane.hafta SET " + "s" + saat.substring(0, 2) + "_" + saat.substring(3, 5)
           + " = null Where h_dok_id = " + this.selected.dokId + " and gun = '" + tarih + "';");
     } catch (Exception e) {
       e.printStackTrace();
     }
 
     this.selected.clear();
-  }
-
-  @Override
-  public Jdbc getDb() {
-    return this.db;
   }
 
   @Override

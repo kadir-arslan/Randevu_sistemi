@@ -10,20 +10,20 @@ import Connection.Jdbc;
 
 public class Admin extends Hasta {
 
-  public Admin(String tc, String sifre, Jdbc db) {
-    super(tc, sifre, db);
+  public Admin(String tc, String sifre) {
+    super(tc, sifre);
   }
 
   public void addPol(String polName) {
     try {
-      this.db.executeUpdate("INSERT INTO hastane.poliklinik(pol_name) VALUES('" + polName + "');");
+      Jdbc.executeUpdate("INSERT INTO hastane.poliklinik(pol_name) VALUES('" + polName + "');");
     } catch (Exception e) {
     }
   }
 
   public void deletePol(String polId) {
     try {
-      this.db.executeUpdate("DELETE FROM hastane.poliklinik WHERE pol_id = " + polId + ";");
+      Jdbc.executeUpdate("DELETE FROM hastane.poliklinik WHERE pol_id = " + polId + ";");
     } catch (Exception e) {
     }
   }
@@ -31,7 +31,7 @@ public class Admin extends Hasta {
   public ArrayList<String[]> getPolList() {
     ArrayList<String[]> ret = new ArrayList<String[]>();
     try {
-      ResultSet result = this.db.executeQuery("SELECT * FROM hastane.poliklinik");
+      ResultSet result = Jdbc.executeQuery("SELECT * FROM hastane.poliklinik");
       while (result.next()) {
         String[] row = new String[2];
         row[0] = result.getString(1);
@@ -48,7 +48,7 @@ public class Admin extends Hasta {
   public void addDok(String dokName, String polName) {
     try {
 
-      this.db.executeUpdate(
+      Jdbc.executeUpdate(
           "INSERT INTO hastane.doktorlar(dok_name , dok_pol_id) VALUES('" + dokName + "'," + getPolId(polName) + ");");
     } catch (Exception e) {
       e.printStackTrace();
@@ -58,7 +58,7 @@ public class Admin extends Hasta {
 
   public void deleteDok(String dokId) {
     try {
-      this.db.executeUpdate("DELETE FROM hastane.doktorlar WHERE dok_id = " + dokId + ";");
+      Jdbc.executeUpdate("DELETE FROM hastane.doktorlar WHERE dok_id = " + dokId + ";");
     } catch (Exception e) {
     }
   }
@@ -67,7 +67,7 @@ public class Admin extends Hasta {
     ArrayList<String[]> ret = new ArrayList<String[]>();
 
     try {
-      ResultSet result = this.db.executeQuery("SELECT * FROM hastane.doktorlar;");
+      ResultSet result = Jdbc.executeQuery("SELECT * FROM hastane.doktorlar;");
       while (result.next()) {
         String[] row = new String[3];
         row[0] = result.getString(1);
@@ -77,7 +77,7 @@ public class Admin extends Hasta {
       }
 
       for (String[] strings : ret) {
-        result = this.db.executeQuery("SELECT pol_name FROM hastane.poliklinik WHERE pol_id = " + strings[2] + " ;");
+        result = Jdbc.executeQuery("SELECT pol_name FROM hastane.poliklinik WHERE pol_id = " + strings[2] + " ;");
         result.next();
         strings[2] = result.getString(1);// tc den hasta isimine dönüştürme
 
@@ -94,7 +94,7 @@ public class Admin extends Hasta {
     ArrayList<String[]> ret = new ArrayList<String[]>();
 
     try {
-      ResultSet result = this.db.executeQuery("SELECT * FROM hastane.hafta;");
+      ResultSet result = Jdbc.executeQuery("SELECT * FROM hastane.hafta;");
       ResultSetMetaData rsmd = result.getMetaData();
       while (result.next()) {
         for (int i = 3; i < 16; i++) {
@@ -116,14 +116,14 @@ public class Admin extends Hasta {
       }
 
       for (String[] strings : ret) {
-        result = this.db.executeQuery("select isim from  hastane.hastalar where tc = " + strings[0] + " ;");
+        result = Jdbc.executeQuery("select isim from  hastane.hastalar where tc = " + strings[0] + " ;");
         result.next();
         strings[0] = result.getString(1);// tc den hasta isimine dönüştürme
 
       }
 
       for (String[] strings : ret) {
-        result = this.db.executeQuery(
+        result = Jdbc.executeQuery(
             "SELECT pol_name FROM hastane.poliklinik WHERE pol_id in(SELECT dok_pol_id FROM hastane.doktorlar WHERE dok_id = '"
                 + strings[4] + "' );");
         result.next();
@@ -131,7 +131,7 @@ public class Admin extends Hasta {
 
       }
       for (String[] strings : ret) {
-        result = this.db.executeQuery("SELECT dok_name FROM hastane.doktorlar WHERE dok_id = '" + strings[5] + "';");
+        result = Jdbc.executeQuery("SELECT dok_name FROM hastane.doktorlar WHERE dok_id = '" + strings[5] + "';");
         result.next();
         strings[5] = result.getString(1);// dok_id değerinden dok_name değerine
 

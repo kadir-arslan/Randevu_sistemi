@@ -37,6 +37,4 @@ public interface User {
   public void deleteRandevu(String tarih, String saat, String pol, String dok);
 
   public String getSifre();
-
-  public Jdbc getDb();
 }

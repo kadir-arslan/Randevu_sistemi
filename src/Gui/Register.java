@@ -8,8 +8,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 public class Register extends JFrame implements ActionListener {
 
-        private Jdbc db = null;
-
         private javax.swing.JTextField isim_alani;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JLabel jLabel2;
@@ -22,9 +20,8 @@ public class Register extends JFrame implements ActionListener {
         private javax.swing.JPasswordField sifre_alani;
         private javax.swing.JCheckBox sifre_goster;
 
-        public Register(Jdbc db) {
+        public Register() {
 
-                this.db = db;
                 initComponents();
                 this.setVisible(true);
 
@@ -307,8 +304,8 @@ public class Register extends JFrame implements ActionListener {
                 if (e.getSource() == register) {
                         try {
 
-                                db.executeUpdate("INSERT INTO hastane.hastalar VALUES(" + kimlik_alani.getText() + ",'"
-                                                + isim_alani.getText() + "','"
+                                Jdbc.executeUpdate("INSERT INTO hastane.hastalar VALUES(" + kimlik_alani.getText()
+                                                + ",'" + isim_alani.getText() + "','"
                                                 + String.valueOf(sifre_alani.getPassword()) + "');");
                                 JOptionPane.showMessageDialog(this,
                                                 "Başarılı şekilde kayıt işlemi gerçekleştirildi !!!");

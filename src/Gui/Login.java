@@ -12,7 +12,6 @@ public class Login extends JFrame implements ActionListener {
 
   private String sifre;
   private String tcKimlikNo;
-  private Jdbc db = null;
   public User user;
 
   private javax.swing.JLabel jLabel1;
@@ -26,8 +25,7 @@ public class Login extends JFrame implements ActionListener {
   private javax.swing.JPasswordField sifre_alani;
   private javax.swing.JCheckBox sifre_goster2;
 
-  public Login(Jdbc db) {
-    this.db = db;
+  public Login() {
     initComponents();
     this.setVisible(true);
   }
@@ -231,12 +229,12 @@ public class Login extends JFrame implements ActionListener {
       this.sifre = String.valueOf(sifre_alani.getPassword());
       this.tcKimlikNo = kimlik_alani.getText();
       try {
-        ResultSet result = db.executeQuery("select * from  hastane.hastalar where tc = " + this.tcKimlikNo + " ;");
+        ResultSet result = Jdbc.executeQuery("select * from  hastane.hastalar where tc = " + this.tcKimlikNo + " ;");
         if (!result.next())
           JOptionPane.showMessageDialog(this, "Hiçbir kullanıcı bulunmamaktadır...");
         else {
           if (result.getString(3).equals(this.sifre)) {
-            user = new Hasta(this.tcKimlikNo, this.sifre, this.db);
+            user = new Hasta(this.tcKimlikNo, this.sifre);
             new AnaSayfa(this.user);
             if (this.tcKimlikNo.equals("11111111111")) {
               new AdminSayfası(this.user);
@@ -253,7 +251,7 @@ public class Login extends JFrame implements ActionListener {
     }
 
     if (e.getSource() == register) {
-      new Register(this.db);
+      new Register();
     }
 
   }

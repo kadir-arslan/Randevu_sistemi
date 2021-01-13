@@ -33,7 +33,7 @@ public class AdminSayfası extends JFrame {
         public AdminSayfası(User user) {
 
                 this.user = user;
-                admin = new Admin(user.getTc(), user.getSifre(), user.getDb());
+                admin = new Admin(user.getTc(), user.getSifre());
 
                 initComponents();
 
